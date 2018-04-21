@@ -46,21 +46,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * init js code to native, and init native modules
      */
     public void init() {
-        JsExecutor.getInstance().init(this, getBoudle(this));
-        testNativeModules();
-    }
-
-    /**
-     * test init native modules
-     */
-    public void testNativeModules() {
         NativeModule module1 = new TestNativeModule();
         NativeModule module2 = new Test1NativeModule();
         ArrayList<NativeModule> list = new ArrayList<>(2);
         list.add(module1);
         list.add(module2);
 
-        JsExecutor.getInstance().createNativeModules(list);
+        JsExecutor.getInstance().init(this.getApplicationContext(), getBoudle(this), list);
     }
 
     private String getBoudle(Context c) {

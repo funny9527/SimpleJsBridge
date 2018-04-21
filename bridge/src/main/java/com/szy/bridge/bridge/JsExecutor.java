@@ -34,10 +34,14 @@ public class JsExecutor {
         return mInstance;
     }
 
-    public void init(Context context, String js) {
+    public void init(Context context, String js, List<NativeModule> list) {
         mBridge = new Bridge();
         mBridge.loadJs(js);
         mBridge.inject();
+
+        for (NativeModule m : list) {
+            addModules(m);
+        }
     }
 
     public String callFunction(String name, String method, Object ...args) {
@@ -59,12 +63,6 @@ public class JsExecutor {
         String[] typesArr = new String[types.size()];
         types.toArray(typesArr);
         mBridge.setNativeModules(module, module.getName(), namesArr, typesArr);
-    }
-
-    public void createNativeModules(ArrayList<NativeModule> list) {
-        for (NativeModule m : list) {
-            addModules(m);
-        }
     }
 
     public synchronized <T extends JsModule> T getJsModule(Class<T> jsInterface) {
