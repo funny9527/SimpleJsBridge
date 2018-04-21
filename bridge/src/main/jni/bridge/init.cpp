@@ -44,7 +44,7 @@ jstring nativeExecuteCallback(JNIEnv *env, jobject self, JSObjectRef fun, jobjec
 
     JSValueRef exception;
     JSValueRef result = JSObjectCallAsFunction((JSContextRef) mJsExecutor->getContext(), fun, NULL, size, ref, &exception);
-    if (result <= 0) {
+    if (result == NULL) {
         mJsExecutor->printErrors(exception, jsValue, 1024);
     } else {
         JSStringRef resultStr = JSValueToStringCopy(mJsExecutor->getContext(), result, NULL);

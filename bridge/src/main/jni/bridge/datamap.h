@@ -4,6 +4,7 @@
 #include <jni.h>
 #include "log.h"
 #include "stdio.h"
+#include <stdlib.h>
 #include <string.h>
 #include <JavaScriptCore/JavaScript.h>
 

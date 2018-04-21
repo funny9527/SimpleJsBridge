@@ -93,7 +93,7 @@ void JsExecutor::loadJs(const char* js, JavaVM* vm) {
     JSStringRef scriptJS = JSStringCreateWithUTF8CString(js);
     JSValueRef ret = JSEvaluateScript(globalContext, scriptJS, NULL, NULL, 0, &exception);
 
-    if (ret <= 0) {
+    if (ret == NULL) {
         char err[1024];
         this->printErrors(exception, err, 1024);
         return ;
@@ -250,7 +250,7 @@ void JsExecutor::callJsFunction(const char* module, int count, const JSValueRef 
 
     JSValueRef exception;
     JSValueRef result = JSObjectCallAsFunction(globalContext, function, NULL, count, args, &exception);
-    if (result <= 0) {
+    if (result == NULL) {
         this->printErrors(exception, retStr, len);
         return ;
     }
@@ -356,7 +356,7 @@ JSValueRef callNativeMethod(JSContextRef ctx, jobject module, jmethodID method, 
 
 
     int len = strlen(sign);
-    char *p = strchr(sign, ')');
+    char *p = (char*) strchr(sign, ')');
     if (p == NULL) {
         LOGD("error sign");
         return JSValueMakeNull(ctx);
