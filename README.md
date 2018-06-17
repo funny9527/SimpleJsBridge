@@ -1,7 +1,4 @@
- SimpleJsBridge
-
 this is a lightweight js bridge for android. simplely implements the following funtions:
-
 1. call javascript from android application with java code.
 2. call android modules in android application with javascript code.
 3. also, jsbridge support callback from android to javascript.
