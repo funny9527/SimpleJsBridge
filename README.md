@@ -46,7 +46,7 @@ load javascript code and register native module
     }
     }
 
-1. define javascript module as interface while extends com.szy.bridge.jsmodule.JsModule;
+3. define javascript module as interface while extends com.szy.bridge.jsmodule.JsModule;
 
     public interface TestJsModule extends JsModule {
     public void function1();
@@ -54,7 +54,7 @@ load javascript code and register native module
     public String test(String a, int b, byte c, boolean d, byte[] arr);
     }
 
-1. implement javascript module in javascript code while add object in global.BridgeBatch, make sure global is the root object of javascript bundle
+4. implement javascript module in javascript code while add object in global.BridgeBatch, make sure global is the root object    of javascript bundle
 
     var global = {
     main : function(a, b) {
@@ -79,7 +79,7 @@ load javascript code and register native module
     }
     }
 
-1. you can load javascript code from wherever from network or local, and finally load with:
+5. you can load javascript code from wherever from network or local, and finally load with:
 
      /**
      * load javascript code
@@ -89,14 +89,12 @@ load javascript code and register native module
      */
       JsExecutor.getInstance().init(Context context, String js, List<NativeModule> list);
 
-1. call javascript from android:
-
-  JsExecutor.getInstance().getJsModule(Class<T> jsInterface).javacript_function
-
+6. call javascript from android:
+    JsExecutor.getInstance().getJsModule(Class<T> jsInterface).javacript_function
+    
     JsExecutor.getInstance().getJsModule(TestJsModule.class).function2(1000, "test java call js");
 
-1. call android module from javascript
-
-  global.NativeModules.android_native_modules.native_function  
-
-    global.NativeModules.TestNativeModule.getData(p1, p2, p3, p4, p5, global.main);
+7. call android module from javascript:
+   global.NativeModules.android_native_modules.native_function  
+   
+   global.NativeModules.TestNativeModule.getData(p1, p2, p3, p4, p5, global.main);
