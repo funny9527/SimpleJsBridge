@@ -1,3 +1,6 @@
+plugins {
+    id "com.github.dcendents.android-maven" version "1.5"
+}
 import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.library'
 
@@ -45,3 +48,6 @@ task ndkBuild(type : Exec, description : 'compile jni via NDK') {
 tasks.withType(JavaCompile) {
     compileTask -> compileTask.dependsOn ndkBuild
 }
+
+group = 'com.github.funny9527'
+version = '1.0'
