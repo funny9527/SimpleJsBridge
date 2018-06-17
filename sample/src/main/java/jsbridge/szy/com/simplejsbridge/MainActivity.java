@@ -52,10 +52,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         list.add(module1);
         list.add(module2);
 
-        JsExecutor.getInstance().init(this.getApplicationContext(), getBoudle(this), list);
+        JsExecutor.getInstance().init(this.getApplicationContext(), getBundle(this), list);
     }
 
-    private String getBoudle(Context c) {
+    private String getBundle(Context c) {
         InputStream in = null;
         try {
             in = c.getResources().getAssets().open("boudle.js");

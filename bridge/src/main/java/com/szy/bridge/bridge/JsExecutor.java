@@ -34,6 +34,12 @@ public class JsExecutor {
         return mInstance;
     }
 
+    /**
+     * load javascript code
+     * @param context
+     * @param js javascript code
+     * @param list android native modules
+     */
     public void init(Context context, String js, List<NativeModule> list) {
         mBridge = new Bridge();
         mBridge.loadJs(js);
@@ -65,6 +71,12 @@ public class JsExecutor {
         mBridge.setNativeModules(module, module.getName(), namesArr, typesArr);
     }
 
+    /**
+     * get javascript module
+     * @param jsInterface
+     * @param <T>
+     * @return
+     */
     public synchronized <T extends JsModule> T getJsModule(Class<T> jsInterface) {
         JsExecutor executor = JsExecutor.getInstance();
         InvocationHandler handler = new JsModuleInvocationHandler(executor, jsInterface.getSimpleName());
