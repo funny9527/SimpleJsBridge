@@ -206,6 +206,9 @@ public class DataMap {
 
     public static DataMap buildData(Object ...args) {
         DataMap map = new DataMap();
+        if (args == null) {
+            return map;
+        }
         int len = args.length;
         for (int i = 0; i < len; i++) {
             Object temp = args[i];

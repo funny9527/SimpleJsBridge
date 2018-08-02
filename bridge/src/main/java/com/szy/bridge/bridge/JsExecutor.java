@@ -51,11 +51,11 @@ public class JsExecutor {
     }
 
     public String callFunction(String name, String method, Object ...args) {
-        return mBridge.execute(name, method, DataMap.buildData(args), args.length);
+        return mBridge.execute(name, method, DataMap.buildData(args), args == null ? 0 : args.length);
     }
 
     public String runCallback(int id, Object ...args) {
-        return mBridge.executeCallback(id, DataMap.buildData(args), args.length);
+        return mBridge.executeCallback(id, DataMap.buildData(args), args == null ? 0 : args.length);
     }
 
     private void addModules(NativeModule module) {

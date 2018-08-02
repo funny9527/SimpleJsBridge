@@ -11,7 +11,6 @@ var global = {
                      },
              function1 : function() {
                          var a = "js function <function1> called";
-                         return a;
                      },
              test : function(p1, p2, p3, p4, p5) {
                      var res = global.NativeModules.TestNativeModule.getData(p1, p2, p3, p4, p5, global.main);

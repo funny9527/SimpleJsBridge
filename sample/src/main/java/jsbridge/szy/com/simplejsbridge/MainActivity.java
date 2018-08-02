@@ -33,6 +33,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.btn1:
                 String value1 = JsExecutor.getInstance().getJsModule(TestJsModule.class).function2(1000, "test java call js");
                 Log.v(TAG, value1);
+                JsExecutor.getInstance().getJsModule(TestJsModule.class).function1();
                 break;
             case R.id.btn2:
                 byte vvv = 127;
@@ -58,7 +59,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private String getBundle(Context c) {
         InputStream in = null;
         try {
-            in = c.getResources().getAssets().open("boudle.js");
+            in = c.getResources().getAssets().open("bundle.js");
             int length = in.available();
             byte[]  buffer = new byte[length];
             in.read(buffer);
