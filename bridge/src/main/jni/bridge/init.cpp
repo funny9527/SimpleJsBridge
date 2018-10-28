@@ -27,12 +27,13 @@ jstring nativeExecute(JNIEnv *env, jobject self, jstring module, jstring method,
     JSValueRef ref[size];
     makeJsParam(env, map, mJsExecutor->getContext(), ref);
 
-    char jsValue[128];
-    mJsExecutor->callJsFunction(c_module, size, ref, c_method, jsValue, 128);
+    char* jsValue = mJsExecutor->callJsFunction(c_module, size, ref, c_method);
 
-    LOGD("get result data : %s", jsValue);
+    LOGD("get result data == : %s", jsValue);
 
-    return env->NewStringUTF(jsValue);
+    jstring res = env->NewStringUTF(jsValue);
+    delete jsValue;
+    return res;
 }
 
 jstring nativeExecuteCallback(JNIEnv *env, jobject self, JSObjectRef fun, jobject map, jint size) {

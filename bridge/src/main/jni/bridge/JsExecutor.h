@@ -41,7 +41,7 @@ class JsExecutor {
 
         void loadJs(const char* js, JavaVM*);
         void printErrors(JSValueRef exception, char* errs, int len);
-        void callJsFunction(const char* module, int count, const JSValueRef args[], const char* fun, char* retStr, int len);
+        char* callJsFunction(const char* module, int count, const JSValueRef args[], const char* fun);
         void registerBaseModule();
         void addModules(NativeModule*);
         std::map<char*, NativeModule*> getNativeModules();

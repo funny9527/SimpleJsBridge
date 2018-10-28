@@ -213,26 +213,28 @@ JSObjectRef JsExecutor::installModule(JSObjectRef object, const char* name, JSOb
     return proxyObj;
 }
 
-void JsExecutor::callJsFunction(const char* module, int count, const JSValueRef args[], const char* fun, char* retStr, int len) {
+char* JsExecutor::callJsFunction(const char* module, int count, const JSValueRef args[], const char* fun) {
     if (globalContext == NULL) {
         LOGD("globalContext is NULL");
-        return ;
+        return NULL;
     }
     if (bridgeObject == NULL) {
         LOGD("bridgeObject is NULL");
-        return ;
+        return NULL;
     }
 
     if (batchObject == NULL) {
         LOGD("batchObject is NULL");
-        return ;
+        return NULL;
     }
+
+    char* retStr = new char[128];
 
     JSObjectRef target = this->getProperty(batchObject, module);
     if (target == NULL) {
         LOGD("no such module %s", module);
         sprintf(retStr, "no sunch module [%s]", module);
-        return ;
+        return NULL;
     }
 
     JSStringRef nameJS = JSStringCreateWithUTF8CString(fun);
@@ -241,7 +243,7 @@ void JsExecutor::callJsFunction(const char* module, int count, const JSValueRef 
          LOGD("no sunch function %s", fun);
          JSStringRelease(nameJS);
          sprintf(retStr, "no sunch function [%s]", fun);
-         return ;
+         return NULL;
     }
 
     JSObjectRef function = (JSObjectRef)JSObjectGetProperty(globalContext, target, nameJS, NULL);
@@ -251,16 +253,20 @@ void JsExecutor::callJsFunction(const char* module, int count, const JSValueRef 
     JSValueRef exception;
     JSValueRef result = JSObjectCallAsFunction(globalContext, function, NULL, count, args, &exception);
     if (result == NULL) {
-        this->printErrors(exception, retStr, len);
-        return ;
+        this->printErrors(exception, retStr, 128);
+        return NULL;
     }
 
     JSStringRef resultStr = JSValueToStringCopy(globalContext, result, NULL);
 
-    JSStringGetUTF8CString(resultStr, retStr, len);
-    LOGD("callFunction result %s", retStr);
+    delete retStr;
+    int length = JSStringGetMaximumUTF8CStringSize(resultStr);
+    retStr = new char[length];
 
+    JSStringGetUTF8CString(resultStr, retStr, length);
+    LOGD("callFunction result length = %d  %s", length, retStr);
     JSStringRelease(resultStr);
+    return retStr;
 }
 
 void JsExecutor::addModules(NativeModule* m) {
